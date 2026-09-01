@@ -22,6 +22,7 @@ export default function QueueTable({ rows }: { rows: QueueRow[] }) {
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [busy, setBusy] = useState<Set<string>>(new Set());
   const [error, setError] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
 
   const draftCount = rows.filter((r) => r.status === "drafted").length;
   const approvedCount = rows.filter((r) => r.status === "approved").length;
@@ -48,9 +49,10 @@ export default function QueueTable({ rows }: { rows: QueueRow[] }) {
     });
   }
 
-  async function act(id: string, action: "approve" | "reject") {
+  async function act(id: string, action: "approve" | "reject" | "send") {
     setBusy((b) => new Set(b).add(id));
     setError(null);
+    setNotice(null);
 
     const edit = edits[id];
     const res = await fetch(`/api/messages/${id}/${action}`, {
@@ -63,9 +65,15 @@ export default function QueueTable({ rows }: { rows: QueueRow[] }) {
       ),
     });
 
+    const payload = await res.json().catch(() => ({}));
     if (!res.ok) {
-      const payload = await res.json().catch(() => ({}));
       setError(payload.error ?? `Could not ${action} the message.`);
+    } else if (action === "send") {
+      setNotice(
+        payload.redirected
+          ? `Sent. Addressed to ${payload.lead_email}, delivered to ${payload.delivered_to} (demo redirect).${payload.slack_notified ? " Slack notified." : ""}`
+          : `Sent to ${payload.delivered_to}.`,
+      );
     }
 
     setBusy((b) => {
@@ -112,6 +120,12 @@ export default function QueueTable({ rows }: { rows: QueueRow[] }) {
       {error && (
         <p className="mt-3 rounded border border-red-300 bg-red-50 p-3 text-sm text-red-700">
           {error}
+        </p>
+      )}
+
+      {notice && (
+        <p className="mt-3 rounded border border-green-300 bg-green-50 p-3 text-sm text-green-800">
+          {notice}
         </p>
       )}
 
@@ -309,6 +323,15 @@ export default function QueueTable({ rows }: { rows: QueueRow[] }) {
                           className="rounded bg-green-700 px-3 py-1.5 text-sm text-white disabled:opacity-50"
                         >
                           {working ? "Working…" : "Approve"}
+                        </button>
+                      )}
+                      {row.status === "approved" && (
+                        <button
+                          onClick={() => act(row.id, "send")}
+                          disabled={working}
+                          className="rounded bg-sky-700 px-3 py-1.5 text-sm text-white disabled:opacity-50"
+                        >
+                          {working ? "Sending…" : "Send"}
                         </button>
                       )}
                       <button
