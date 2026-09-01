@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "seed": "tsx --env-file=.env.local scripts/seed.ts"
+    "seed": "tsx --env-file=.env.local scripts/seed.ts",
+    "test-llm": "tsx --env-file=.env.local scripts/test-llm.ts"
   },
   "dependencies": {
     "@google/genai": "^2.20.0",
