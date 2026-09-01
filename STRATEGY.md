@@ -1,28 +1,149 @@
 # Strategy — Greenscape Pro Reactivation Agent
 
-> Sections marked **TODO (yours)** are strategy content that has to come from you.
-> Everything else is written from what the build actually does.
+## The five agents
 
----
+Ranked by return net of build effort and risk, not by raw problem size. The
+reactivation agent in this repo is the P0.
 
-## TODO (yours) — The five agents
+**1. Closed-Lost Reactivation Agent** *(built here)*
+Turns the ~1,400 dead leads into booked jobs with personalized, owner-voiced
+outreach a human approves before it sends.
+- Reads each closed-lost record, scores re-close likelihood, drafts in Marcus's
+  voice with the angle set by loss reason, verifies against the record, queues for
+  approval.
+- Replaces Brittany's occasional untargeted re-engagement blasts and the manual
+  work of personalizing at volume, which is why it never happens systematically.
+- ROI: ~1,400 leads at a conservative 2% re-close × $28k avg ≈ **$784k** latent
+  revenue; CAC already sunk. Even a fraction of that dwarfs the build cost.
+- Why #1: highest expected value per unit of risk. The leads are already paid for,
+  it changes nothing about how Marcus sells, every send is human-approved so the
+  downside is capped, and it ships genuinely end-to-end in a week — the fastest
+  path to *proven* revenue, which earns trust for the riskier builds behind it.
 
-_The five agents you'd build for Greenscape Pro, ranked, with the reasoning for
-the ordering. The reactivation agent in this repo is the P0 of that set._
+**2. Quote Accelerator**
+Compresses the 6–9 day site-walk-to-proposal cycle that loses 35–40% of qualified
+leads to faster competitors.
+- Turns Marcus's site-walk notes into a structured scope, prices it against the
+  200-line pricing sheet, produces a draft proposal for him to edit and send.
+- Replaces the manual scope-interpretation and line-item assembly Marcus does on
+  every proposal personally.
+- ROI: highest raw revenue at risk in the business — recovering even a third of
+  the lost 35–40% is worth well into six figures a year.
+- Why not #1: its core — turning site-walk judgment plus a 200-line pricing model
+  into a proposal Marcus *trusts* — is exactly what he says nobody else can do. A
+  quote agent that misprices actively loses money, so it's a multi-week,
+  higher-risk build. Bigger ceiling, wrong thing to ship first.
 
-## TODO (yours) — "De-Marcus the workflow"
+**3. Post-Sign Chaser**
+Clears the 4–6 week post-signing limbo (HOA, permits, deposits) that ties up cash
+and stalls crew scheduling.
+- Watches each signed project's stage and fires the right nudge — deposit
+  reminders to the customer, HOA/permit follow-ups — escalating only real stalls
+  to Jenna.
+- Replaces Jenna's manual chasing across 8–12 projects in limbo at any time.
+- ROI: 8–12 projects × $28k = **$224k–$336k** in delayed revenue accelerated, plus
+  recovered crew-scheduling time (idle crews compound).
 
-_The thesis: which parts of Marcus's judgement are actually encodable, which are
-not, and where the boundary sits._
+**4. Small-Approvals Assistant**
+Answers the 5–10 daily Slack pings from Jenna ("customer wants X, what do I
+charge?") using Marcus's codified decision framework.
+- Recommends an action and price with a confidence score, auto-clears routine
+  calls, escalates only genuinely ambiguous ones to Marcus.
+- Replaces Marcus as the bottleneck on routine operational decisions — the thing
+  he most wants off his plate ("I want my evenings back").
+- ROI: hard to price — it buys back Marcus's attention rather than direct revenue,
+  and it can't be ground-truthed until his rules exist (today they're in his
+  head). Highest *emotional* value, softest dollar figure — see the thesis below
+  for why it's the deepest idea but not the P0.
 
-## TODO (yours) — Reflective answers
+**5. Build-Phase Update Agent**
+Sends Marcus-branded progress updates to customers mid-build, triggered by
+CompanyCam photos or Jobber milestones.
+- Auto-drafts a short update on each milestone; scales the referral-driving Loom
+  habit from ~30% of jobs to ~100%.
+- Replaces the inconsistent, ad-hoc updates that leave customers calling Jenna
+  every 4–5 days asking what's happening.
+- ROI: real but diffuse — fewer anxiety calls, more referrals — the smallest and
+  least-attributable dollar figure of the five. Last because of that, and because
+  it reuses the reactivation agent's exact "context → owner-voice → approve → send"
+  spine, so it's cheapest to add once #1 exists.
 
-_Both reflective questions from the brief._
+## The thesis: de-Marcus the workflow
 
-## TODO (yours) — The notes-contradiction catch
+Greenscape's constraint isn't five separate problems — it's one. Every revenue
+path routes through Marcus. He interprets every site walk, prices every proposal,
+approves every small decision, and is the only one who can re-engage a lead in a
+voice that works. He is the single point of failure, and the ranking above is one
+argument applied five times: each agent is scored by how much Marcus-dependency it
+removes, or how much already-paid-for revenue it captures that he has no bandwidth
+to reach.
 
-_The observation about contradictions in the lead notes._
+That framing also draws the boundary the agents have to respect — what's encodable
+versus what isn't:
 
+- **Genuinely his, leave it:** the site walk itself. It closes at 70%+ versus ~20%
+  for phone quotes. That's a real competitive advantage rooted in his physical
+  presence and read of a customer; automating it would destroy value, not create
+  it. No agent touches it.
+- **Encodable with acceptable risk, ship now:** re-engaging dead leads in his
+  voice. The judgment is bounded — it's grounded in facts already in the record,
+  and a human approves every message — so the failure mode is small and reversible.
+  That's the P0.
+- **Encodable but high-risk, ship later:** interpreting site-walk notes into a
+  priced proposal. This *is* encodable, but it depends on pricing logic and scope
+  judgment that live only in his head, and the cost of getting it wrong is a
+  mispriced job. Worth doing (#2), not worth doing first or fast.
+- **Encodable only after he externalizes it:** the small-approvals framework. It
+  can't be automated until the rules exist, and today they don't — "I keep saying
+  I'll write it down, I never do." The agent's real first job there is to *extract*
+  the framework, not apply one. That dependency is why it's #4, not the P0.
+
+The reactivation agent is the right first cut because it removes a Marcus
+dependency at the point where his judgment is most encodable and the risk of being
+wrong is lowest.
+
+## Reflective answers
+
+**Why is your #1 not the founder's stated #1?**
+
+Marcus's stated #1 is quoting speed, and he's right that it's the biggest *problem*
+— it's #2 here, not off the list. But "biggest problem" and "best first build" are
+different questions. The first agent should have the best return net of risk, so it
+proves the model works before touching his pricing logic. Reactivation wins on that
+axis: the leads are already paid for (sunk CAC, pure upside), it changes nothing
+about how he sells, every send is human-approved so the downside is capped, and it
+ships end-to-end in a week. The quote accelerator has a higher ceiling but its value
+is locked behind the one thing Marcus says nobody else can do — interpreting his
+notes and pricing them right — and a quote agent that misprices actively loses
+money. So reactivation first: fastest path to proven revenue, and it earns the trust
+to go build the harder thing next.
+
+**One agent you considered and did not include, and why not.**
+
+A **crew upsell-coaching agent** — the in-pocket assistant Marcus explicitly asked
+for, that tells a crew lead how to price an on-site add-on. It's real money (~1
+missed upsell per crew per week × 4 crews × ~$500 ≈ **$104k/year**) and it's his
+stated #3. It's cut because it's an order of magnitude below the revenue plays *and*
+it's the riskiest to land: its value depends on changing crew behavior in the field
+in the moment, which is an adoption problem no model solves, and the leakage it
+targets is a fraction of what the quote cycle and the dead-lead pile are losing. It
+becomes worth building once the revenue engine is de-Marcus'd and the constraint
+moves to margin protection — phase two, not top five. (The marketing/content agent
+Marcus listed #4 is cut harder: he admitted on the call that lead volume isn't his
+constraint, so it solves a non-problem.)
+
+## The notes-contradiction catch
+
+The two source documents disagree on the small-approvals flow. The onboarding form
+says Jenna receives "5–10 Slack pings *from Marcus* per day"; the discovery
+transcript has Marcus saying "Jenna pings *me* 5–10 times a day." The transcript
+direction is the operative one — the whole point is that her routine decisions
+require his sign-off, which is what makes the Small-Approvals Assistant (#4) a
+Marcus-dependency to remove rather than a task to hand Jenna. Flagging it because
+founder-submitted intake data isn't ground truth: it's how the founder *remembers*
+the business, and where a form and a live account diverge, the account with
+specifics usually wins. Treating the intake as gospel would have inverted who the
+bottleneck is.
 ---
 
 ## Architecture decisions
