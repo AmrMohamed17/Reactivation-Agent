@@ -2,6 +2,17 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -32,34 +43,41 @@ export default function LoginPage() {
 
   return (
     <main className="flex min-h-screen items-center justify-center p-6">
-      <form
-        onSubmit={onSubmit}
-        className="w-full max-w-sm space-y-4 rounded border border-gray-300 p-6"
-      >
-        <div>
-          <h1 className="text-lg font-semibold">Greenscape Pro</h1>
-          <p className="text-sm text-gray-600">Reactivation agent — internal tool</p>
-        </div>
+      <Card className="w-full max-w-sm">
+        <CardHeader>
+          <CardTitle>Greenscape Pro</CardTitle>
+          <CardDescription>
+            Reactivation agent. Internal tool — this deployment can send real
+            email, so it stays gated.
+          </CardDescription>
+        </CardHeader>
 
-        <input
-          type="password"
-          value={passcode}
-          onChange={(e) => setPasscode(e.target.value)}
-          placeholder="Passcode"
-          autoFocus
-          className="w-full rounded border border-gray-300 px-3 py-2 text-sm"
-        />
+        <CardContent>
+          <form onSubmit={onSubmit} className="grid gap-4">
+            <div className="grid gap-2">
+              <Label htmlFor="passcode">Passcode</Label>
+              <Input
+                id="passcode"
+                type="password"
+                value={passcode}
+                onChange={(e) => setPasscode(e.target.value)}
+                autoFocus
+                autoComplete="current-password"
+              />
+            </div>
 
-        {error && <p className="text-sm text-red-600">{error}</p>}
+            {error && (
+              <Alert variant="destructive">
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
 
-        <button
-          type="submit"
-          disabled={pending || passcode.length === 0}
-          className="w-full rounded bg-gray-900 px-3 py-2 text-sm text-white disabled:opacity-50"
-        >
-          {pending ? "Checking…" : "Enter"}
-        </button>
-      </form>
+            <Button type="submit" disabled={pending || passcode.length === 0}>
+              {pending ? "Checking…" : "Enter"}
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
     </main>
   );
 }

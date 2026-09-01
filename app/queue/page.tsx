@@ -1,3 +1,5 @@
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { SiteHeader } from "@/components/site-header";
 import { getSupabase } from "@/lib/supabase";
 import type { Lead, Message } from "@/lib/types";
 import QueueTable, { type QueueRow } from "./QueueTable";
@@ -13,12 +15,16 @@ export default async function QueuePage() {
 
   if (error) {
     return (
-      <main className="mx-auto max-w-3xl p-8">
-        <h1 className="text-xl font-semibold">Review queue</h1>
-        <p className="mt-4 rounded border border-red-300 bg-red-50 p-3 text-sm text-red-700">
-          Could not load the queue: {error.message}
-        </p>
-      </main>
+      <>
+        <SiteHeader active="queue" />
+        <main className="mx-auto max-w-6xl px-6 py-8">
+          <Alert variant="destructive">
+            <AlertDescription>
+              Could not load the queue: {error.message}
+            </AlertDescription>
+          </Alert>
+        </main>
+      </>
     );
   }
 
