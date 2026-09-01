@@ -38,6 +38,23 @@ export const AnalysisSchema = z.object({
   scoring: ScoringSchema,
 });
 
+/** Stage 3 — the generated email. */
+export const DraftSchema = z.object({
+  subject: z.string().min(1),
+  body: z.string().min(1),
+});
+
+/** Stage 4 — the grounding pass. */
+export const VerificationSchema = z.object({
+  passed: z.boolean().describe("True only when unsupported_claims is empty"),
+  unsupported_claims: z
+    .array(z.string())
+    .describe("Exact phrase from the draft, plus what the record actually says"),
+  notes: z
+    .string()
+    .describe("One-line summary of the finding. Empty string when nothing is wrong"),
+});
+
 /**
  * The tier bands the scoring prompt is given. Applied in code after the call so
  * a lead's tier can never contradict its own score, whatever the model returns.
@@ -51,3 +68,5 @@ export function tierForScore(score: number): "hot" | "warm" | "cold" {
 export type Extraction = z.infer<typeof ExtractionSchema>;
 export type Scoring = z.infer<typeof ScoringSchema>;
 export type Analysis = z.infer<typeof AnalysisSchema>;
+export type Draft = z.infer<typeof DraftSchema>;
+export type Verification = z.infer<typeof VerificationSchema>;

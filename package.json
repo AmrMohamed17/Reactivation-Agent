@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "seed": "tsx --env-file=.env.local scripts/seed.ts",
-    "test-llm": "tsx --env-file=.env.local scripts/test-llm.ts"
+    "test-llm": "tsx --env-file=.env.local scripts/test-llm.ts",
+    "test-verifier": "tsx --env-file=.env.local scripts/test-verifier.ts"
   },
   "dependencies": {
     "@google/genai": "^2.20.0",
