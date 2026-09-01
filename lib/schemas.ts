@@ -56,6 +56,15 @@ export const VerificationSchema = z.object({
 });
 
 /**
+ * Reply classification. Not one of the four pipeline stages — a separate call
+ * on the inbound side, per ARCHITECTURE.md §7.
+ */
+export const ClassificationSchema = z.object({
+  sentiment: z.enum(["positive", "neutral", "negative"]),
+  intent: z.enum(["interested", "not_interested", "question", "unsubscribe"]),
+});
+
+/**
  * The tier bands the scoring prompt is given. Applied in code after the call so
  * a lead's tier can never contradict its own score, whatever the model returns.
  */
@@ -70,3 +79,4 @@ export type Scoring = z.infer<typeof ScoringSchema>;
 export type Analysis = z.infer<typeof AnalysisSchema>;
 export type Draft = z.infer<typeof DraftSchema>;
 export type Verification = z.infer<typeof VerificationSchema>;
+export type Classification = z.infer<typeof ClassificationSchema>;
